@@ -1,0 +1,16 @@
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.navItem {
+  margin-bottom: 0;
+}
+
+.navItem:not(:first-child) {
+  margin-left: 15px;
+}
+
+.activeLink {
+  text-decoration: underline;
+}

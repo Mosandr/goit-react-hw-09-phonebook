@@ -1,0 +1,30 @@
+.ContactList {
+}
+
+.item {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 4px 1px rgba(0, 86, 179, 0.24);
+  background-color: #fff;
+  transition: box-shadow 200ms;
+
+  &:hover {
+    box-shadow: 0px 0px 7px 6px rgba(0, 86, 179, 0.24);
+  }
+}
+
+.contactInfo {
+  display: flex;
+  flex-flow: column;
+}
+
+.name {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.editButton {
+  margin-right: 15px;
+}

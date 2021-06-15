@@ -1,0 +1,15 @@
+.ContactForm {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+
+  & > button {
+    align-self: start;
+  }
+}
+
+.input {
+  margin-bottom: 15px;
+  width: 100%;
+  max-width: 300px;
+}

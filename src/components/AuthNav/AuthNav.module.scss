@@ -1,0 +1,11 @@
+.AuthNav {
+  display: flex;
+}
+
+.navItem:not(:last-child) {
+  margin-right: 15px;
+}
+
+.activeLink {
+  text-decoration: underline;
+}
