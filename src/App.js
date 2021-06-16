@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 
 import authOperations from "./redux/auth/auth-operations";
+import { getIsAuthenticated } from "./redux/auth/auth-selectors";
 
 const HomePage = lazy(() =>
   import("./views/HomePage/HomePage" /* webpackChunkName: "home-page" */)
@@ -32,10 +33,10 @@ const ContactsPage = lazy(() =>
   )
 );
 
-const App = ({ getCurrentUser }) => {
+const App = ({ isAuthenticated, getCurrentUser }) => {
   useEffect(() => {
-    getCurrentUser();
-  }, []);
+    isAuthenticated && getCurrentUser();
+  }, [isAuthenticated, getCurrentUser]);
 
   return (
     <>
@@ -73,8 +74,12 @@ const App = ({ getCurrentUser }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  isAuthenticated: getIsAuthenticated(state),
+});
+
 const mapDispatchToProps = {
   getCurrentUser: authOperations.getCurrentUser,
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
