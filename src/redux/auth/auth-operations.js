@@ -61,7 +61,7 @@ const logOut = () => async (dispatch) => {
   }
 };
 
-const getCurrentUser = (credentials) => async (dispatch, getState) => {
+const getCurrentUser = () => async (dispatch, getState) => {
   const {
     auth: { token: persistedToken },
   } = getState();

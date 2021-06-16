@@ -7,8 +7,6 @@ import UserMenu from "../UserMenu";
 import { getIsAuthenticated } from "../../redux/auth/auth-selectors";
 import styles from "./AppBar.module.scss";
 
-const isAuthenticated = false;
-
 const Header = ({ isAuthenticated }) => {
   return (
     <div className={styles.Header}>

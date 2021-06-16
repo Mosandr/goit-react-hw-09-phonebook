@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -33,10 +33,10 @@ const ContactsPage = lazy(() =>
   )
 );
 
-const App = ({ isAuthenticated, getCurrentUser }) => {
+const App = ({ getCurrentUser }) => {
   useEffect(() => {
-    isAuthenticated && getCurrentUser();
-  }, [isAuthenticated, getCurrentUser]);
+    getCurrentUser();
+  }, [getCurrentUser]);
 
   return (
     <>
@@ -74,12 +74,8 @@ const App = ({ isAuthenticated, getCurrentUser }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
-
 const mapDispatchToProps = {
   getCurrentUser: authOperations.getCurrentUser,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
