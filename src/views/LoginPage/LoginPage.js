@@ -1,6 +1,6 @@
 // login form
 
-import { Component } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import shortId from "shortid";
 
@@ -10,70 +10,62 @@ import { Button } from "react-bootstrap";
 
 import authOperations from "../../redux/auth/auth-operations";
 
-class LoginPage extends Component {
-  state = {
-    email: "",
-    password: "",
+const LoginPage = ({ onSubmit }) => {
+  const [email, setEmail] = useState("");
+
+  const handleEmailGhange = (event) => {
+    setEmail(event.target.value);
   };
 
-  handleGhange = (event) => {
-    const { target } = event;
-    this.setState({ [target.name]: target.value });
+  const [password, setPassword] = useState("");
+
+  const handlePasswordGhange = (event) => {
+    setPassword(event.target.value);
   };
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    const userData = this.state;
-    this.props.onSubmit(userData);
-
-    this.setState({
-      email: "",
-      password: "",
-    });
+    const userData = { email, password };
+    onSubmit(userData);
   };
 
-  render() {
-    const { email, password } = this.state;
+  const idForEmail = shortId.generate();
+  const idForPassword = shortId.generate();
 
-    const idForEmail = shortId.generate();
-    const idForPassword = shortId.generate();
+  return (
+    <Container>
+      <h1>Login</h1>
+      <form className={styles.LoginForm} onSubmit={handleSubmit}>
+        <label htmlFor={idForEmail}>Email</label>
+        <input
+          className={styles.input}
+          id={idForEmail}
+          onChange={handleEmailGhange}
+          type="email"
+          name="email"
+          value={email}
+          required
+        />
 
-    return (
-      <Container>
-        <h1>Login</h1>
-        <form className={styles.LoginForm} onSubmit={this.handleSubmit}>
-          <label htmlFor={idForEmail}>Email</label>
-          <input
-            className={styles.input}
-            id={idForEmail}
-            onChange={this.handleGhange}
-            type="email"
-            name="email"
-            value={email}
-            required
-          />
-
-          <label htmlFor={idForPassword}>Password</label>
-          <input
-            className={styles.input}
-            id={idForPassword}
-            onChange={this.handleGhange}
-            type="password"
-            name="password"
-            value={password}
-            minLength="8"
-            title="Пароль должен быть не менее 8 символов"
-            required
-          />
-          <Button variant="success" type="submit">
-            LogIn
-          </Button>
-        </form>
-      </Container>
-    );
-  }
-}
+        <label htmlFor={idForPassword}>Password</label>
+        <input
+          className={styles.input}
+          id={idForPassword}
+          onChange={handlePasswordGhange}
+          type="password"
+          name="password"
+          value={password}
+          minLength="8"
+          title="Пароль должен быть не менее 8 символов"
+          required
+        />
+        <Button variant="success" type="submit">
+          LogIn
+        </Button>
+      </form>
+    </Container>
+  );
+};
 
 const mapDispatchToProps = {
   onSubmit: authOperations.logIn,

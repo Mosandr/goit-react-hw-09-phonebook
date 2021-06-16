@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useEffect } from "react";
 import { Switch, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -32,50 +32,46 @@ const ContactsPage = lazy(() =>
   )
 );
 
-class App extends Component {
-  state = {};
+const App = ({ getCurrentUser }) => {
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
-  componentDidMount() {
-    this.props.getCurrentUser();
-  }
-
-  render() {
-    return (
-      <>
-        <AppBar />
-        <Suspense
-          fallback={
-            <Container>
-              <h1>Loading</h1>
-            </Container>
-          }
-        >
-          <Switch>
-            <PublicRoute exact path={routes.home} component={HomePage} />
-            <PublicRoute
-              restricted
-              path={routes.register}
-              component={RegisterPage}
-              redirectTo={routes.contacts}
-            />
-            <PublicRoute
-              restricted
-              path={routes.login}
-              component={LoginPage}
-              redirectTo={routes.contacts}
-            />
-            <PrivateRoute
-              path={routes.contacts}
-              component={ContactsPage}
-              redirectTo={routes.login}
-            />
-            <Redirect to={routes.home} />
-          </Switch>
-        </Suspense>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <AppBar />
+      <Suspense
+        fallback={
+          <Container>
+            <h1>Loading</h1>
+          </Container>
+        }
+      >
+        <Switch>
+          <PublicRoute exact path={routes.home} component={HomePage} />
+          <PublicRoute
+            restricted
+            path={routes.register}
+            component={RegisterPage}
+            redirectTo={routes.contacts}
+          />
+          <PublicRoute
+            restricted
+            path={routes.login}
+            component={LoginPage}
+            redirectTo={routes.contacts}
+          />
+          <PrivateRoute
+            path={routes.contacts}
+            component={ContactsPage}
+            redirectTo={routes.login}
+          />
+          <Redirect to={routes.home} />
+        </Switch>
+      </Suspense>
+    </>
+  );
+};
 
 const mapDispatchToProps = {
   getCurrentUser: authOperations.getCurrentUser,

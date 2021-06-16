@@ -2,7 +2,6 @@ import { connect } from "react-redux";
 import { filterChange } from "../../redux/contacts/contacts-actions";
 import { getFilter } from "../../redux/contacts/contacts-selectors";
 import shortId from "shortid";
-import PropTypes from "prop-types";
 import styles from "./Filter.module.scss";
 
 const Filter = ({ value, onFilterChange }) => {
@@ -31,8 +30,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);
-
-PropTypes.Filter = {
-  value: PropTypes.string.isRequired,
-  onFilterChange: PropTypes.func.isRequired,
-};

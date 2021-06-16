@@ -63,4 +63,9 @@ const editContact = (contact) => async (dispatch, getState) => {
   }
 };
 
-export default { fetchContacts, addContact, deleteContact, editContact };
+export default {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  editContact,
+};
