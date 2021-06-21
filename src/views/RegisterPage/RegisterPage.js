@@ -10,29 +10,24 @@ import styles from "./RegisterPage.module.scss";
 import { Button } from "react-bootstrap";
 
 const RegisterPage = ({ onSubmit }) => {
-  const [name, setName] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-  const handleNameGhange = (event) => {
-    setName(event.target.value);
-  };
-
-  const [email, setEmail] = useState("");
-
-  const handleEmailGhange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const [password, setPassword] = useState("");
-
-  const handlePasswordGhange = (event) => {
-    setPassword(event.target.value);
+  const handleChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userData = { name, email, password };
-    onSubmit(userData);
+    onSubmit(user);
   };
+
+  const { name, email, password } = user;
 
   const idForName = shortId.generate();
   const idForEmail = shortId.generate();
@@ -46,7 +41,7 @@ const RegisterPage = ({ onSubmit }) => {
         <input
           className={styles.input}
           id={idForName}
-          onChange={handleNameGhange}
+          onChange={handleChange}
           type="text"
           name="name"
           value={name}
@@ -59,7 +54,7 @@ const RegisterPage = ({ onSubmit }) => {
         <input
           className={styles.input}
           id={idForEmail}
-          onChange={handleEmailGhange}
+          onChange={handleChange}
           type="email"
           name="email"
           value={email}
@@ -70,7 +65,7 @@ const RegisterPage = ({ onSubmit }) => {
         <input
           className={styles.input}
           id={idForPassword}
-          onChange={handlePasswordGhange}
+          onChange={handleChange}
           type="password"
           name="password"
           value={password}

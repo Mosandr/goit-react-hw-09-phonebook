@@ -11,23 +11,23 @@ import { Button } from "react-bootstrap";
 import authOperations from "../../redux/auth/auth-operations";
 
 const LoginPage = ({ onSubmit }) => {
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleEmailGhange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const [password, setPassword] = useState("");
-
-  const handlePasswordGhange = (event) => {
-    setPassword(event.target.value);
+  const handleChange = (event) => {
+    const { target } = event;
+    const { name, value } = target;
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userData = { email, password };
-    onSubmit(userData);
+    onSubmit(user);
   };
+
+  const { email, password } = user;
 
   const idForEmail = shortId.generate();
   const idForPassword = shortId.generate();
@@ -40,7 +40,7 @@ const LoginPage = ({ onSubmit }) => {
         <input
           className={styles.input}
           id={idForEmail}
-          onChange={handleEmailGhange}
+          onChange={handleChange}
           type="email"
           name="email"
           value={email}
@@ -51,7 +51,7 @@ const LoginPage = ({ onSubmit }) => {
         <input
           className={styles.input}
           id={idForPassword}
-          onChange={handlePasswordGhange}
+          onChange={handleChange}
           type="password"
           name="password"
           value={password}

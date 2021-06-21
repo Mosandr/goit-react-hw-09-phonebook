@@ -7,25 +7,23 @@ import styles from "./ContactEditForm.module.scss";
 import { Button } from "react-bootstrap";
 
 const ContactEditForm = ({ editContact, onSubmit }) => {
-  const [name, setName] = useState(editContact.name);
-  const [number, setNumber] = useState(editContact.number);
+  const [user, setUser] = useState({
+    name: editContact.name,
+    number: editContact.number,
+  });
 
-  const handleNameChange = (event) => {
+  const handleChange = (event) => {
     const { target } = event;
-    setName(target.value);
-  };
-
-  const handleNumberChange = (event) => {
-    const { target } = event;
-    setNumber(target.value);
+    const { name, value } = target;
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const data = { name, number };
-    onSubmit(data);
+    onSubmit(user);
   };
+
+  const { name, number } = user;
 
   const idForName = shortId.generate();
   const idForNumber = shortId.generate();
@@ -38,7 +36,7 @@ const ContactEditForm = ({ editContact, onSubmit }) => {
       <input
         className={styles.input}
         id={idForName}
-        onChange={handleNameChange}
+        onChange={handleChange}
         type="text"
         name="name"
         value={name}
@@ -52,7 +50,7 @@ const ContactEditForm = ({ editContact, onSubmit }) => {
       <input
         className={styles.input}
         id={idForNumber}
-        onChange={handleNumberChange}
+        onChange={handleChange}
         type="tel"
         name="number"
         value={number}

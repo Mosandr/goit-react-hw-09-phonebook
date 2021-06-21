@@ -7,17 +7,17 @@ import styles from "./ContactForm.module.scss";
 import { Button } from "react-bootstrap";
 
 const ContactForm = ({ contacts, onSubmit }) => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    number: "",
+  });
 
-  const handleNameChange = (event) => {
-    const { target } = event;
-    setName(target.value);
-  };
+  const { name, number } = user;
 
-  const handleNumberChange = (event) => {
+  const handleChange = (event) => {
     const { target } = event;
-    setNumber(target.value);
+    const { name, value } = target;
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const isContainsInputedName = () => {
@@ -31,14 +31,13 @@ const ContactForm = ({ contacts, onSubmit }) => {
     event.preventDefault();
 
     if (isContainsInputedName()) {
-      alert(`${name} is already in contacts`);
+      alert(`${user.name} is already in contacts`);
       return;
     }
 
-    const data = { name, number };
+    const data = user;
     onSubmit(data);
-    setName("");
-    setNumber("");
+    setUser({ name: "", number: "" });
   };
 
   const idForName = shortId.generate();
@@ -52,7 +51,7 @@ const ContactForm = ({ contacts, onSubmit }) => {
       <input
         className={styles.input}
         id={idForName}
-        onChange={handleNameChange}
+        onChange={handleChange}
         type="text"
         name="name"
         value={name}
@@ -66,7 +65,7 @@ const ContactForm = ({ contacts, onSubmit }) => {
       <input
         className={styles.input}
         id={idForNumber}
-        onChange={handleNumberChange}
+        onChange={handleChange}
         type="tel"
         name="number"
         value={number}
